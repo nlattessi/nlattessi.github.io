@@ -361,63 +361,10 @@ var TTTGame = (function() {
 
   TTTGame.prototype.init = function() {
     this.game.stage.backgroundColor = '#9bd3e1';
-    this.game.add.plugin(Phaser.Plugin.Debug);
+    //this.game.add.plugin(Phaser.Plugin.Debug);
   };
 
   TTTGame.prototype.preload = function() {
-    // this.game.load is an instance of the Phaser.Loader class
-    // this.game.load.image('tile_road_1', 'static/img/assets/tile_road_1.png');
-    // this.game.load.image('taxi', 'static/img/assets/taxi.png');
-    // this.game.load.image('obstacle_1', 'static/img/assets/obstacle_1.png');
-    // this.game.load.image('gameOver', 'static/img/assets/gameOver.png');
-    // this.game.load.atlasJSONArray(
-    //   'numbers',
-    //   'static/img/spritesheets/numbers.png',
-    //   'static/img/spritesheets/numbers.json'
-    // );
-    // this.game.load.image('empty', 'static/img/assets/empty.png');
-    // this.game.load.image('green_end', 'static/img/assets/green_end.png');
-    // this.game.load.image('green_middle_empty', 'static/img/assets/green_middle_empty.png');
-    // this.game.load.image('green_middle_tree', 'static/img/assets/green_middle_tree.png');
-    // this.game.load.image('green_start', 'static/img/assets/green_start.png');
-    // this.game.load.image('water', 'static/img/assets/water.png');
-    // this.game.load.image('building', 'static/img/assets/buildingTiles_124.png');
-    // this.game.load.image('building_2', 'static/img/assets/buildingTiles_047.png'); // Small windows brown
-    // this.game.load.image('building_base_1', 'static/img/assets/buildingTiles_124.png'); // Grey
-    // this.game.load.image('building_base_2', 'static/img/assets/buildingTiles_107.png'); // Semi-Red
-    // this.game.load.image('building_base_3', 'static/img/assets/buildingTiles_100.png'); // Green
-    // this.game.load.image('building_base_4', 'static/img/assets/buildingTiles_099.png'); // Full red
-    //
-    // this.game.load.image('building_middle_small_brown_1', 'static/img/assets/buildingTiles_047.png'); // Small windows brown
-    // this.game.load.image('building_middle_small_brown_2', 'static/img/assets/buildingTiles_038.png'); // Big windows brown
-    // this.game.load.image('building_middle_big_brown_1', 'static/img/assets/buildingTiles_000.png'); // 2 Big windows brown
-    // this.game.load.image('building_middle_big_brown_2', 'static/img/assets/buildingTiles_007.png'); // 1 Big window brown
-    //
-    // this.game.load.image('building_middle_small_beige_1', 'static/img/assets/buildingTiles_051.png'); // Small windows beige
-    // this.game.load.image('building_middle_small_beige_2', 'static/img/assets/buildingTiles_044.png'); // Big windows beige
-    // this.game.load.image('building_middle_big_beige_1', 'static/img/assets/buildingTiles_008.png'); // 2 Big windows beige
-    // this.game.load.image('building_middle_big_beige_2', 'static/img/assets/buildingTiles_015.png'); // 1 Big window beige
-    //
-    // this.game.load.image('building_middle_small_red_1', 'static/img/assets/buildingTiles_054.png'); // Small windows red
-    // this.game.load.image('building_middle_small_red_2', 'static/img/assets/buildingTiles_049.png'); // Big windows red
-    // this.game.load.image('building_middle_big_red_1', 'static/img/assets/buildingTiles_016.png'); // 2 Big windows red
-    // this.game.load.image('building_middle_big_red_2', 'static/img/assets/buildingTiles_023.png'); // 1 Big window red
-    //
-    // this.game.load.image('building_middle_small_grey_1', 'static/img/assets/buildingTiles_056.png'); // Small windows grey
-    // this.game.load.image('building_middle_small_grey_2', 'static/img/assets/buildingTiles_053.png'); // Big windows grey
-    // this.game.load.image('building_middle_big_grey_1', 'static/img/assets/buildingTiles_024.png'); // 2 Big windows grey
-    // this.game.load.image('building_middle_big_grey_2', 'static/img/assets/buildingTiles_031.png'); // 1 Big window grey
-    //
-    // this.game.load.image('logo', 'static/img/assets/logo.png');
-    // this.game.load.image('tapToStart', 'static/img/assets/tapToStart.png');
-    //
-    // this.game.load.atlasJSONArray(
-    //     'playButton',
-    //     'static/img/spritesheets/playButton.png',
-    //     'static/img/spritesheets/playButton.json'
-    // );
-
-    // Spritesheets
     // Spritesheets
     this.game.load.atlasJSONArray('numbers', 'static/img/spritesheets/numbers.png', 'static/img/spritesheets/numbers.json');
     this.game.load.atlasJSONArray('playButton', 'static/img/spritesheets/playButton.png', 'static/img/spritesheets/playButton.json');
