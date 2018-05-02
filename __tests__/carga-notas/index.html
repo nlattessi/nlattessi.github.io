@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!--Import Google Icon Font-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <!--Import materialize.css-->
+    <link type="text/css" rel="stylesheet" href="css/materialize.min.css" media="screen,projection" />
+
+    <!--Let browser know website is optimized for mobile-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+
+<body>
+
+    <body>
+        <div class="container">
+            <!-- Page Content goes here -->
+
+            <div class="row">
+                <div class="col s12">
+                    <ul class="tabs">
+                        <li class="tab col s3">
+                            <a class="active" href="#trimestre1">1er Trimestre</a>
+                        </li>
+                        <li class="tab col s3">
+                            <a href="#trimestre2">2do Trimestre</a>
+                        </li>
+                        <li class="tab col s3 disabled">
+                            <a href="#trimestre3">3er Trimestre</a>
+                        </li>
+                    </ul>
+                </div>
+                <div id="trimestre1" class="col s12">
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="row">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre y Apellido</th>
+                                            <th>Parciales</th>
+                                            <th>Sumativa 1</th>
+                                            <th>Sumativa 2</th>
+                                            <th>Concepto</th>
+                                            <th>Promedio</th>
+                                        </tr>
+                                    </thead>
+
+                                    <tbody>
+                                        <tr>
+                                            <td>Nahuel Lattessi</td>
+                                            <td>
+                                                <!-- Modal Trigger -->
+                                                <a class="waves-effect waves-light btn-small modal-trigger" href="#modal1">Ver</a>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s6">
+                                                    <input id="sumativa_1" type="number" class="validate">
+                                                    <label for="sumativa_1">Nota</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s6">
+                                                    <input id="sumativa_2" type="number" class="validate">
+                                                    <label for="sumativa_2">Nota</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s6">
+                                                    <input id="concepto" type="number" class="validate">
+                                                    <label for="concepto">Nota</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h5>10</h5>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Melina Sabuncuyan</td>
+                                            <td>
+                                                <!-- Modal Trigger -->
+                                                <a class="waves-effect waves-light btn-small modal-trigger" href="#modal1">Ver</a>
+
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s6">
+                                                    <input id="sumativa_1" type="number" class="validate">
+                                                    <label for="sumativa_1">Nota</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s6">
+                                                    <input id="sumativa_2" type="number" class="validate">
+                                                    <label for="sumativa_2">Nota</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s6">
+                                                    <input id="concepto" type="number" class="validate">
+                                                    <label for="concepto">Nota</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h5>10</h5>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col s12 right-align">
+                            <a class="waves-effect waves-light btn right-align blue darken-1">
+                                <i class="material-icons left">cloud</i>Guardar</a>
+                            <a class="waves-effect waves-light btn right-align red darken-1">
+                                <i class="material-icons right">cloud</i>Cancelar</a>
+                        </div>
+
+                    </div>
+                </div>
+                <div id="trimestre2" class="col s12">2do Trimestre</div>
+                <div id="trimestre3" class="col s12">3er Trimestre</div>
+            </div>
+
+
+        </div>
+
+        <!-- Modal Structure -->
+        <div id="modal1" class="modal modal-fixed-footer">
+            <div class="modal-content">
+                <div class="content">
+                    <div class="row">
+                        <form class="col s12">
+                            <div class="row">
+                                <h6 class="col s2">Agregar parcial:</h6>
+                                <div class="input-field col s4">
+                                    <input id="descripcion" type="text" class="validate">
+                                    <label for="descripcion">Descripcion</label>
+                                </div>
+                                <div class="input-field col s4">
+                                    <input id="fecbha" type="text" class="datepicker">
+                                    <label for="fecbha">Fecha</label>
+                                </div>
+                                <a class="waves-effect waves-light btn col s2">Agregar</a>
+                            </div>
+                        </form>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col s12">
+                            <div class="row">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Nombre y Apellido</th>
+                                            <th>20/04 - Parcialito</th>
+                                            <th>04/05 - Ejercicitacion</th>
+                                            <th>Promedio</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Nahuel Lattessi</td>
+                                            <td>
+                                                <div class="input-field col s6">
+                                                    <input id="Parcialito" type="number" class="validate">
+                                                    <label for="Parcialito">Nota</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s6">
+                                                    <input id="ejercitacion" type="number" class="validate">
+                                                    <label for="ejercitacion">Nota</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h5>10</h5>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Melina Sabuncuyan</td>
+                                            <td>
+                                                <div class="input-field col s6">
+                                                    <input id="Parcialito" type="number" class="validate">
+                                                    <label for="Parcialito">Nota</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <div class="input-field col s6">
+                                                    <input id="ejercitacion" type="number" class="validate">
+                                                    <label for="ejercitacion">Nota</label>
+                                                </div>
+                                            </td>
+                                            <td>
+                                                <h5>10</h5>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Cancelar</a>
+                <a href="#!" class="modal-close waves-effect waves-green btn-flat">Guardar</a>
+            </div>
+        </div>
+
+    </body>
+
+    <!--JavaScript at end of body for optimized loading-->
+    <script type="text/javascript" src="js/materialize.min.js"></script>
+
+    <script type="text/javascript">
+        M.AutoInit();
+    </script>
+</body>
+
+</html>
