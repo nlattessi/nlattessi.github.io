@@ -149,6 +149,8 @@ const renderItems = () => {
     shuffle(videos);
     shuffle(fotos);
 
+    console.log(fotos)
+
     const items = letras.map(l => {
         return {
             letra: l,
