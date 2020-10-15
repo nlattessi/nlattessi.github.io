@@ -26,7 +26,7 @@ const fotos = fillRange(20, 24);
 const fireLastVideo = () => Swal.fire({
     html:
         `<video style="text-center" width="320" height="240" controls> +
-        <source src="/media/dante/final.mp4" type="video/mp4"> +
+        <source src="media/dante/final.mp4" type="video/mp4"> +
         Sorry, your browser doesnt support embedded videos. +
         </video>`,
     title: `<span style="color:${randomColor()}">Y los más lindos saluditos!</span>`,
@@ -57,7 +57,7 @@ const viewVideo = async e => {
         Swal.fire({
             html:
                 `<video id="myVideo"style="text-center" width="320" height="240" controls> +
-                <source src="/media/${video}.mp4" type="video/mp4"> +
+                <source src="media/${video}.mp4" type="video/mp4"> +
                 Sorry, your browser doesnt support embedded videos. +
                 </video>`,
             title: `<span style="color:${randomColor()}">Me gusta...</span>`,

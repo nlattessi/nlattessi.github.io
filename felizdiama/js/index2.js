@@ -65,7 +65,7 @@ const fireMacaVideo = () => {
     Swal.fire({
         html:
             `<video id="myVideo"style="text-center" width="320" height="240" controls> +
-            <source src="/media/maca.mp4" type="video/mp4"> +
+            <source src="media/maca.mp4" type="video/mp4"> +
             Sorry, your browser doesnt support embedded videos. +
             </video>`,
         title: `<span style="color:${randomColor()}">Saluditos</span>&nbsp;de...`,
@@ -84,7 +84,7 @@ const fireLeoVideo = () => {
     Swal.fire({
         html:
             `<video id="myVideo"style="text-center" width="320" height="240" controls> +
-            <source src="/media/leo.mp4" type="video/mp4"> +
+            <source src="media/leo.mp4" type="video/mp4"> +
             Sorry, your browser doesnt support embedded videos. +
             </video>`,
         title: `<span style="color:${randomColor()}">Y también</span>&nbsp;de...`,
@@ -125,7 +125,7 @@ const viewVideo = async e => {
         Swal.fire({
             html:
                 `<video id="myVideo"style="text-center" width="320" height="240" controls> +
-                <source src="/media/${video}.mp4" type="video/mp4"> +
+                <source src="media/${video}.mp4" type="video/mp4"> +
                 Sorry, your browser doesnt support embedded videos. +
                 </video>`,
             title: `<span style="color:${randomColor()}">Saluditos</span>&nbsp;de...`,
