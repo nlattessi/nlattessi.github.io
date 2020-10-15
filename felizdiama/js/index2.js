@@ -49,14 +49,14 @@ const videos = [
     'zarush',
 ];
 
-const fotos = fillRange(1, 14);
+const fotos = fillRange(1, 15);
 
 const goNext = () => {
     Swal.fire({
         html: '<iframe width="100%" height="300" src="//www.youtube.com/embed/MG-B-imarjo?wmode=transparent&amp;iv_load_policy=3&amp;autoplay=1" frameborder="0"></iframe>',
         confirmButtonText: 'Mas?! &rarr;',
         didClose: () => {
-            window.location.href = '/index3.html';
+            window.location.href = 'index3.html';
         },
     });
 };
@@ -90,8 +90,8 @@ const fireLeoVideo = () => {
         title: `<span style="color:${randomColor()}">Y también</span>&nbsp;de...`,
         confirmButtonText: saludos[Math.floor(Math.random() * saludos.length)],
         didClose: () => {
-            // if (clickeados >= letras.length) {
-            if (clickeados >= 2) {
+            if (clickeados >= letras.length) {
+            // if (clickeados >= 2) {
                 goNext();
             }
 
@@ -131,8 +131,8 @@ const viewVideo = async e => {
             title: `<span style="color:${randomColor()}">Saluditos</span>&nbsp;de...`,
             confirmButtonText: saludos[Math.floor(Math.random() * saludos.length)],
             didClose: () => {
-                // if (clickeados >= letras.length) {
-                if (clickeados >= 2) {
+                if (clickeados >= letras.length) {
+                // if (clickeados >= 2) {
                     goNext();
                 }
 
