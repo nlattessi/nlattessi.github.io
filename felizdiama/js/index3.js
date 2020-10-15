@@ -36,7 +36,7 @@ const fireLastVideo = () => Swal.fire({
         popup: 'animate__animated animate__bounce'
     },
     didClose: () => {
-        window.location.href = '/backstage.html';
+        window.location.href = 'backstage.html';
     },
 });
 
