@@ -20,30 +20,56 @@ const letras = [
     'a',
     'm',
     'i',
-    'i',
 ];
 
 const videos = [
     'mama',
-    //'naza',
+    'naza',
     'noe',
     'charo',
     'ana',
     'nati',
     'mariana',
-    //'facu',
-    //'marto',
     'maca',
     // 'leo',
     'marisol',
-    'ceci',
     'vale',
-    'caro',
+    // 'ceci',
+    // 'caro',
     'cris',
     'zarush',
+    // 'facu',
+    // 'marto',
 ];
 
-const fotos = fillRange(1, 15);
+const fotosLove = [
+    'love1',
+    'love2',
+    'love3',
+];
+
+const fotos = fillRange(1, 14);
+
+const getSwalOptions = video => {
+    return {
+        html:
+            `<video style="text-center" width="320" height="240" controls> +
+            <source src="media/${video}.mp4" type="video/mp4"> +
+            Sorry, your browser doesnt support embedded videos. +
+            </video>`,
+        title: `<span style="color:${randomColor()}">Saluditos</span>&nbsp;de...`,
+        confirmButtonText: saludos[Math.floor(Math.random() * saludos.length)],
+        didClose: () => {
+            if (clickeados >= letras.length) {
+                goNext();
+            }
+        },
+        width: 600,
+        showClass: {
+            popup: 'animate__animated animate__pulse'
+        },
+    };
+};
 
 const goNext = () => {
     Swal.fire({
@@ -55,46 +81,67 @@ const goNext = () => {
     });
 };
 
-const fireMacaVideo = () => {
+const fireLovePhoto = () => {
+    const randomLoveImg = fotosLove[Math.floor(Math.random() * fotosLove.length)];
+
     Swal.fire({
-        html:
-            `<video id="myVideo"style="text-center" width="320" height="240" controls> +
-            <source src="media/maca.mp4" type="video/mp4"> +
-            Sorry, your browser doesnt support embedded videos. +
-            </video>`,
-        title: `<span style="color:${randomColor()}">Saluditos</span>&nbsp;de...`,
-        confirmButtonText: 'Sigue! &rarr;',
+        title: 'Yo también te amo!',
+        text: 'Nahui ❤️',
+        imageUrl: `img/${randomLoveImg}.jpg`,
+        imageWidth: 400,
+        imageHeight: 200,
+        didClose: () => {
+            if (clickeados >= letras.length) {
+                goNext();
+                return;
+            }
+        },
+    })
+};
+
+const fireMacaVideo = () => {
+    const swalOptions = Object.assign({}, getSwalOptions('maca'), {
         didClose: () => {
             fireLeoVideo();
         },
-        width: 600,
-        showClass: {
-            popup: 'animate__animated animate__pulse'
-        },
+        confirmButtonText: 'Sigue! &rarr;',
     });
+    Swal.fire(swalOptions);
 };
 
 const fireLeoVideo = () => {
-    Swal.fire({
-        html:
-            `<video id="myVideo"style="text-center" width="320" height="240" controls> +
-            <source src="media/leo.mp4" type="video/mp4"> +
-            Sorry, your browser doesnt support embedded videos. +
-            </video>`,
+    const swalOptions = Object.assign({}, getSwalOptions('leo'), {
         title: `<span style="color:${randomColor()}">Y también</span>&nbsp;de...`,
-        confirmButtonText: saludos[Math.floor(Math.random() * saludos.length)],
-        didClose: () => {
-            if (clickeados >= letras.length) {
-            // if (clickeados >= 2) {
-                goNext();
-            }
-
-        },
-        width: 600,
-        showClass: {
-            popup: 'animate__animated animate__pulse'
-        },
     });
+    Swal.fire(swalOptions);
+};
+
+const fireValeVideo = () => {
+    const swalOptions = Object.assign({}, getSwalOptions('vale'), {
+        didClose: () => {
+            fireCeciVideo();
+        },
+        confirmButtonText: 'Sigue! &rarr;',
+    });
+    Swal.fire(swalOptions);
+};
+
+const fireCeciVideo = () => {
+    const swalOptions = Object.assign({}, getSwalOptions('ceci'), {
+        didClose: () => {
+            fireCaroVideo();
+        },
+        title: `<span style="color:${randomColor()}">Y también</span>&nbsp;de...`,
+        confirmButtonText: 'Sigue! &rarr;',
+    });
+    Swal.fire(swalOptions);
+};
+
+const fireCaroVideo = () => {
+    const swalOptions = Object.assign({}, getSwalOptions('caro'), {
+        title: `<span style="color:${randomColor()}">Y también</span>&nbsp;de...`,
+    });
+    Swal.fire(swalOptions);
 };
 
 const viewVideo = async e => {
@@ -111,39 +158,28 @@ const viewVideo = async e => {
     }, 200);
 
     setTimeout(() => {
+        if (video === 'undefined') {
+            fireLovePhoto();
+            return;
+        }
+
         if (video === 'maca') {
             fireMacaVideo();
             return;
         }
 
-        Swal.fire({
-            html:
-                `<video id="myVideo"style="text-center" width="320" height="240" controls> +
-                <source src="media/${video}.mp4" type="video/mp4"> +
-                Sorry, your browser doesnt support embedded videos. +
-                </video>`,
-            title: `<span style="color:${randomColor()}">Saluditos</span>&nbsp;de...`,
-            confirmButtonText: saludos[Math.floor(Math.random() * saludos.length)],
-            didClose: () => {
-                if (clickeados >= letras.length) {
-                // if (clickeados >= 2) {
-                    goNext();
-                }
+        if (video === 'vale') {
+            fireValeVideo();
+            return;
+        }
 
-            },
-            width: 600,
-            showClass: {
-                popup: 'animate__animated animate__pulse'
-            },
-        });
+        Swal.fire(getSwalOptions(video));
     }, 750);
 };
 
 const renderItems = () => {
     shuffle(videos);
     shuffle(fotos);
-
-    console.log(fotos)
 
     const items = letras.map(l => {
         return {

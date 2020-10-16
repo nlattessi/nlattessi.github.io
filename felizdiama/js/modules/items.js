@@ -1,8 +1,5 @@
 import { html } from 'https://unpkg.com/lit-html?module';
 
-//style="background-image:url('img/fotos/${item.foto}.jpg')"
-// style="background-image:url('http://placekitten.com/g/200/300')"
-
 const itemTemplate = (item, clickHandler) => {
     const handler = {
         handleEvent(e) {
