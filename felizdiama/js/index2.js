@@ -24,27 +24,21 @@ const letras = [
 ];
 
 const videos = [
-    //'mama',
+    'mama',
     //'naza',
-
     'noe',
     'charo',
     'ana',
     'nati',
     'mariana',
-
     //'facu',
     //'marto',
-
     'maca',
     // 'leo',
-
     'marisol',
-
-    //'ceci',
-    //'vale',
-    //'caro',
-
+    'ceci',
+    'vale',
+    'caro',
     'cris',
     'zarush',
 ];
