@@ -6,70 +6,22 @@ import itemListTemplate from './modules/items.js';
 let clickeados = 0;
 
 const letras = [
-    'f',
+    't',
     'e',
-    'l',
-    'i',
-    'z',
-    'whitespace',
-    'd',
-    'i',
-    'a',
-    'whitespace',
-    'm',
     'a',
     'm',
-    'i',
+    'o',
 ];
 
 const videos = [
-    'mama',
-    'naza',
-    'noe',
-    'charo',
-    'ana',
-    'nati',
-    'mariana',
-    'maca',
-    // 'leo',
-    'marisol',
-    'vale',
-    // 'ceci',
-    // 'caro',
-    'cris',
-    'zarush',
-    // 'facu',
-    // 'marto',
+    'dante/gusta_bailar',
+    'dante/gusta_cocinar',
+    'dante/gusta_despertar',
+    'dante/gusta_sentarme_silla',
+    'dante/gusta_ponerle_besitos',
 ];
 
-const fotosLove = [
-    'love1',
-    'love2',
-    'love3',
-];
-
-const fotos = fillRange(1, 14);
-
-const getSwalOptions = video => {
-    return {
-        html:
-            `<video style="text-center" width="320" height="240" controls> +
-            <source src="media/${video}.mp4" type="video/mp4"> +
-            Sorry, your browser doesnt support embedded videos. +
-            </video>`,
-        title: `<span style="color:${randomColor()}">Saluditos</span>&nbsp;de...`,
-        confirmButtonText: saludos[Math.floor(Math.random() * saludos.length)],
-        didClose: () => {
-            if (clickeados >= letras.length) {
-                goNext();
-            }
-        },
-        width: 600,
-        showClass: {
-            popup: 'animate__animated animate__pulse'
-        },
-    };
-};
+const fotos = fillRange(20, 24);
 
 const goNext = () => {
     Swal.fire({
@@ -79,69 +31,6 @@ const goNext = () => {
             window.location.href = 'index3.html';
         },
     });
-};
-
-const fireLovePhoto = () => {
-    const randomLoveImg = fotosLove[Math.floor(Math.random() * fotosLove.length)];
-
-    Swal.fire({
-        title: 'Yo también te amo!',
-        text: 'Nahui ❤️',
-        imageUrl: `img/${randomLoveImg}.jpg`,
-        imageWidth: 400,
-        imageHeight: 200,
-        didClose: () => {
-            if (clickeados >= letras.length) {
-                goNext();
-                return;
-            }
-        },
-    })
-};
-
-const fireMacaVideo = () => {
-    const swalOptions = Object.assign({}, getSwalOptions('maca'), {
-        didClose: () => {
-            fireLeoVideo();
-        },
-        confirmButtonText: 'Sigue! &rarr;',
-    });
-    Swal.fire(swalOptions);
-};
-
-const fireLeoVideo = () => {
-    const swalOptions = Object.assign({}, getSwalOptions('leo'), {
-        title: `<span style="color:${randomColor()}">Y también</span>&nbsp;de...`,
-    });
-    Swal.fire(swalOptions);
-};
-
-const fireValeVideo = () => {
-    const swalOptions = Object.assign({}, getSwalOptions('vale'), {
-        didClose: () => {
-            fireCeciVideo();
-        },
-        confirmButtonText: 'Sigue! &rarr;',
-    });
-    Swal.fire(swalOptions);
-};
-
-const fireCeciVideo = () => {
-    const swalOptions = Object.assign({}, getSwalOptions('ceci'), {
-        didClose: () => {
-            fireCaroVideo();
-        },
-        title: `<span style="color:${randomColor()}">Y también</span>&nbsp;de...`,
-        confirmButtonText: 'Sigue! &rarr;',
-    });
-    Swal.fire(swalOptions);
-};
-
-const fireCaroVideo = () => {
-    const swalOptions = Object.assign({}, getSwalOptions('caro'), {
-        title: `<span style="color:${randomColor()}">Y también</span>&nbsp;de...`,
-    });
-    Swal.fire(swalOptions);
 };
 
 const viewVideo = async e => {
@@ -158,22 +47,26 @@ const viewVideo = async e => {
     }, 200);
 
     setTimeout(() => {
-        if (video === 'undefined') {
-            fireLovePhoto();
-            return;
-        }
+        Swal.fire({
+            html:
+                `<video id="myVideo"style="text-center" width="320" height="240" controls> +
+                <source src="media/${video}.mp4" type="video/mp4"> +
+                Sorry, your browser doesnt support embedded videos. +
+                </video>`,
+            title: `<span style="color:${randomColor()}">Me gusta...</span>`,
+            confirmButtonText: saludos[Math.floor(Math.random() * saludos.length)],
+            didClose: () => {
+                if (clickeados >= letras.length) {
+                // if (clickeados >= 2) {
+                    goNext();
+                }
 
-        if (video === 'maca') {
-            fireMacaVideo();
-            return;
-        }
-
-        if (video === 'vale') {
-            fireValeVideo();
-            return;
-        }
-
-        Swal.fire(getSwalOptions(video));
+            },
+            width: 600,
+            showClass: {
+                popup: 'animate__animated animate__pulse'
+            },
+        });
     }, 750);
 };
 
@@ -190,9 +83,8 @@ const renderItems = () => {
         };
     });
 
-    render(itemListTemplate(items.splice(0, 5), viewVideo), $("#simpleList"));
-    render(itemListTemplate(items.splice(0, 5), viewVideo), $("#simpleList2"));
-    render(itemListTemplate(items, viewVideo), $("#simpleList3"));
+    render(itemListTemplate(items.splice(0, 2), viewVideo), $("#simpleList"));
+    render(itemListTemplate(items, viewVideo), $("#simpleList2"));
 };
 
 renderItems();
