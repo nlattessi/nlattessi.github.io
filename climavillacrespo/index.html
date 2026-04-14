@@ -1,0 +1,462 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Clima Villa Crespo</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Google Sans', Roboto, Arial, sans-serif;
+      background: #202124;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      min-height: 100vh;
+      padding: 40px 16px;
+    }
+
+    .widget {
+      background: #303134;
+      border-radius: 16px;
+      width: 100%;
+      max-width: 440px;
+      overflow: hidden;
+      color: #e8eaed;
+      box-shadow: 0 1px 6px rgba(0,0,0,0.3);
+    }
+
+    .widget-header {
+      padding: 20px 24px 0;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-start;
+    }
+
+    .location {
+      font-size: 22px;
+      font-weight: 400;
+      color: #e8eaed;
+    }
+
+    .datetime {
+      font-size: 13px;
+      color: #9aa0a6;
+      margin-top: 2px;
+    }
+
+    .current-section {
+      padding: 12px 24px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .temp-main {
+      display: flex;
+      flex-direction: column;
+    }
+
+    .current-temp {
+      font-size: 64px;
+      font-weight: 300;
+      line-height: 1;
+      color: #e8eaed;
+    }
+
+    .condition-text {
+      font-size: 14px;
+      color: #9aa0a6;
+      margin-top: 6px;
+    }
+
+    .condition-icon {
+      font-size: 72px;
+      line-height: 1;
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,0.2));
+    }
+
+    .details-row {
+      padding: 0 24px 16px;
+      display: flex;
+      gap: 24px;
+      font-size: 13px;
+      color: #9aa0a6;
+    }
+
+    .detail-item {
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+
+    .detail-icon {
+      font-size: 16px;
+    }
+
+    .separator {
+      height: 1px;
+      background: #3c4043;
+      margin: 0 24px;
+    }
+
+    /* Hourly forecast */
+    .hourly-section {
+      padding: 16px 0;
+    }
+
+    .hourly-scroll {
+      display: flex;
+      overflow-x: auto;
+      padding: 0 24px;
+      gap: 0;
+      scrollbar-width: none;
+    }
+
+    .hourly-scroll::-webkit-scrollbar { display: none; }
+
+    .hourly-item {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 58px;
+      padding: 8px 4px;
+      gap: 6px;
+    }
+
+    .hourly-time {
+      font-size: 12px;
+      color: #9aa0a6;
+      white-space: nowrap;
+    }
+
+    .hourly-icon {
+      font-size: 24px;
+    }
+
+    .hourly-temp {
+      font-size: 14px;
+      font-weight: 500;
+      color: #e8eaed;
+    }
+
+    /* Daily forecast */
+    .daily-section {
+      padding: 8px 24px 16px;
+    }
+
+    .daily-item {
+      display: flex;
+      align-items: center;
+      padding: 10px 0;
+    }
+
+    .daily-day {
+      width: 48px;
+      font-size: 14px;
+      color: #e8eaed;
+    }
+
+    .daily-icon {
+      font-size: 22px;
+      width: 40px;
+      text-align: center;
+    }
+
+    .daily-temps {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-left: 12px;
+    }
+
+    .daily-max {
+      font-size: 14px;
+      font-weight: 500;
+      color: #e8eaed;
+      width: 32px;
+      text-align: right;
+    }
+
+    .temp-bar-container {
+      flex: 1;
+      height: 4px;
+      background: #3c4043;
+      border-radius: 2px;
+      position: relative;
+    }
+
+    .temp-bar {
+      position: absolute;
+      height: 100%;
+      border-radius: 2px;
+      background: linear-gradient(to right, #81c995, #fdd663, #f28b82);
+    }
+
+    .daily-min {
+      font-size: 14px;
+      color: #9aa0a6;
+      width: 32px;
+    }
+
+    /* Loading state */
+    .loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding: 60px;
+      color: #9aa0a6;
+      font-size: 14px;
+    }
+
+    .spinner {
+      width: 24px;
+      height: 24px;
+      border: 3px solid #3c4043;
+      border-top-color: #8ab4f8;
+      border-radius: 50%;
+      animation: spin 0.8s linear infinite;
+      margin-right: 12px;
+    }
+
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    .error {
+      padding: 40px 24px;
+      text-align: center;
+      color: #f28b82;
+      font-size: 14px;
+    }
+
+    .attribution {
+      padding: 8px 24px 14px;
+      font-size: 11px;
+      color: #5f6368;
+      text-align: right;
+    }
+
+    .attribution a {
+      color: #8ab4f8;
+      text-decoration: none;
+    }
+  </style>
+</head>
+<body>
+
+<div class="widget" id="widget">
+  <div class="loading" id="loading">
+    <div class="spinner"></div>
+    Cargando clima...
+  </div>
+</div>
+
+<script>
+  const VILLA_CRESPO_LAT = -34.5986;
+  const VILLA_CRESPO_LON = -58.4369;
+
+  const WMO_CODES = {
+    0: { desc: 'Despejado', icon: '☀️', night: '🌙' },
+    1: { desc: 'Mayormente despejado', icon: '🌤️', night: '🌙' },
+    2: { desc: 'Parcialmente nublado', icon: '⛅', night: '☁️' },
+    3: { desc: 'Nublado', icon: '☁️', night: '☁️' },
+    45: { desc: 'Niebla', icon: '🌫️', night: '🌫️' },
+    48: { desc: 'Niebla con escarcha', icon: '🌫️', night: '🌫️' },
+    51: { desc: 'Llovizna ligera', icon: '🌦️', night: '🌧️' },
+    53: { desc: 'Llovizna moderada', icon: '🌦️', night: '🌧️' },
+    55: { desc: 'Llovizna intensa', icon: '🌧️', night: '🌧️' },
+    56: { desc: 'Llovizna helada ligera', icon: '🌧️', night: '🌧️' },
+    57: { desc: 'Llovizna helada intensa', icon: '🌧️', night: '🌧️' },
+    61: { desc: 'Lluvia ligera', icon: '🌦️', night: '🌧️' },
+    63: { desc: 'Lluvia moderada', icon: '🌧️', night: '🌧️' },
+    65: { desc: 'Lluvia intensa', icon: '🌧️', night: '🌧️' },
+    66: { desc: 'Lluvia helada ligera', icon: '🌧️', night: '🌧️' },
+    67: { desc: 'Lluvia helada intensa', icon: '🌧️', night: '🌧️' },
+    71: { desc: 'Nevada ligera', icon: '🌨️', night: '🌨️' },
+    73: { desc: 'Nevada moderada', icon: '🌨️', night: '🌨️' },
+    75: { desc: 'Nevada intensa', icon: '🌨️', night: '🌨️' },
+    77: { desc: 'Granizo', icon: '🌨️', night: '🌨️' },
+    80: { desc: 'Chaparrones ligeros', icon: '🌦️', night: '🌧️' },
+    81: { desc: 'Chaparrones moderados', icon: '🌧️', night: '🌧️' },
+    82: { desc: 'Chaparrones intensos', icon: '🌧️', night: '🌧️' },
+    85: { desc: 'Nevada ligera', icon: '🌨️', night: '🌨️' },
+    86: { desc: 'Nevada intensa', icon: '🌨️', night: '🌨️' },
+    95: { desc: 'Tormenta eléctrica', icon: '⛈️', night: '⛈️' },
+    96: { desc: 'Tormenta con granizo ligero', icon: '⛈️', night: '⛈️' },
+    99: { desc: 'Tormenta con granizo intenso', icon: '⛈️', night: '⛈️' },
+  };
+
+  const DAYS = ['Dom', 'Lun', 'Mar', 'Mié', 'Jue', 'Vie', 'Sáb'];
+
+  function getWeatherInfo(code, isNight) {
+    const info = WMO_CODES[code] || { desc: 'Desconocido', icon: '❓', night: '❓' };
+    return { desc: info.desc, icon: isNight ? info.night : info.icon };
+  }
+
+  function formatTime(dateStr) {
+    const d = new Date(dateStr);
+    const h = d.getHours();
+    return `${h}:00`;
+  }
+
+  function isNightTime(hour, sunrise, sunset) {
+    return hour < sunrise || hour >= sunset;
+  }
+
+  async function fetchWeather() {
+    const params = new URLSearchParams({
+      latitude: VILLA_CRESPO_LAT,
+      longitude: VILLA_CRESPO_LON,
+      current: 'temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m,precipitation',
+      hourly: 'temperature_2m,weather_code',
+      daily: 'weather_code,temperature_2m_max,temperature_2m_min,sunrise,sunset',
+      timezone: 'America/Argentina/Buenos_Aires',
+      forecast_days: 7,
+    });
+
+    const res = await fetch(`https://api.open-meteo.com/v1/forecast?${params}`);
+    if (!res.ok) throw new Error('Error al obtener datos');
+    return res.json();
+  }
+
+  function render(data) {
+    const { current, hourly, daily } = data;
+    const now = new Date(current.time);
+    const currentHour = now.getHours();
+
+    // Determine sunrise/sunset hours for today
+    const sunriseHour = new Date(daily.sunrise[0]).getHours();
+    const sunsetHour = new Date(daily.sunset[0]).getHours();
+    const nightNow = isNightTime(currentHour, sunriseHour, sunsetHour);
+
+    const weather = getWeatherInfo(current.weather_code, nightNow);
+
+    // Format date
+    const dateOpts = { weekday: 'long', day: 'numeric', month: 'long' };
+    const dateStr = now.toLocaleDateString('es-AR', dateOpts);
+    const timeStr = now.toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' });
+
+    // Find today's high/low
+    const todayMax = Math.round(daily.temperature_2m_max[0]);
+    const todayMin = Math.round(daily.temperature_2m_min[0]);
+
+    // Build hourly forecast (next 24 hours from current hour)
+    const nowISO = current.time;
+    const startIdx = hourly.time.findIndex(t => t >= nowISO);
+    const hourlySlice = [];
+    for (let i = startIdx; i < Math.min(startIdx + 24, hourly.time.length); i++) {
+      const h = new Date(hourly.time[i]).getHours();
+      // Find which day this hour belongs to for sunrise/sunset
+      const dayStr = hourly.time[i].substring(0, 10);
+      const dayIdx = daily.time.indexOf(dayStr);
+      const sr = dayIdx >= 0 ? new Date(daily.sunrise[dayIdx]).getHours() : sunriseHour;
+      const ss = dayIdx >= 0 ? new Date(daily.sunset[dayIdx]).getHours() : sunsetHour;
+      const isNight = isNightTime(h, sr, ss);
+      const wInfo = getWeatherInfo(hourly.weather_code[i], isNight);
+      hourlySlice.push({
+        time: i === startIdx ? 'Ahora' : formatTime(hourly.time[i]),
+        temp: Math.round(hourly.temperature_2m[i]),
+        icon: wInfo.icon,
+      });
+    }
+
+    // Daily forecast (skip today)
+    const globalMin = Math.min(...daily.temperature_2m_min);
+    const globalMax = Math.max(...daily.temperature_2m_max);
+    const tempRange = globalMax - globalMin || 1;
+
+    const dailyItems = daily.time.slice(1).map((d, i) => {
+      const idx = i + 1;
+      const date = new Date(d + 'T12:00:00');
+      const day = DAYS[date.getDay()];
+      const wInfo = getWeatherInfo(daily.weather_code[idx], false);
+      const max = Math.round(daily.temperature_2m_max[idx]);
+      const min = Math.round(daily.temperature_2m_min[idx]);
+      const left = ((min - globalMin) / tempRange) * 100;
+      const width = ((max - min) / tempRange) * 100;
+      return { day, icon: wInfo.icon, max, min, left, width };
+    });
+
+    const widget = document.getElementById('widget');
+    widget.innerHTML = `
+      <div class="widget-header">
+        <div>
+          <div class="location">Villa Crespo</div>
+          <div class="datetime">${dateStr} ${timeStr}</div>
+        </div>
+      </div>
+
+      <div class="current-section">
+        <div class="temp-main">
+          <div class="current-temp">${Math.round(current.temperature_2m)}°</div>
+          <div class="condition-text">${weather.desc}</div>
+          <div class="condition-text" style="margin-top:2px">${todayMax}° / ${todayMin}°</div>
+        </div>
+        <div class="condition-icon">${weather.icon}</div>
+      </div>
+
+      <div class="details-row">
+        <div class="detail-item">
+          <span class="detail-icon">💧</span>
+          <span>Humedad: ${current.relative_humidity_2m}%</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-icon">💨</span>
+          <span>Viento: ${Math.round(current.wind_speed_10m)} km/h</span>
+        </div>
+        <div class="detail-item">
+          <span class="detail-icon">🌡️</span>
+          <span>ST: ${Math.round(current.apparent_temperature)}°</span>
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="hourly-section">
+        <div class="hourly-scroll">
+          ${hourlySlice.map(h => `
+            <div class="hourly-item">
+              <div class="hourly-time">${h.time}</div>
+              <div class="hourly-icon">${h.icon}</div>
+              <div class="hourly-temp">${h.temp}°</div>
+            </div>
+          `).join('')}
+        </div>
+      </div>
+
+      <div class="separator"></div>
+
+      <div class="daily-section">
+        ${dailyItems.map(d => `
+          <div class="daily-item">
+            <div class="daily-day">${d.day}</div>
+            <div class="daily-icon">${d.icon}</div>
+            <div class="daily-temps">
+              <div class="daily-max">${d.max}°</div>
+              <div class="temp-bar-container">
+                <div class="temp-bar" style="left:${d.left}%;width:${Math.max(d.width, 4)}%"></div>
+              </div>
+              <div class="daily-min">${d.min}°</div>
+            </div>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="attribution">
+        Datos: <a href="https://open-meteo.com/" target="_blank" rel="noopener">Open-Meteo</a>
+      </div>
+    `;
+  }
+
+  fetchWeather()
+    .then(render)
+    .catch(err => {
+      document.getElementById('widget').innerHTML = `
+        <div class="error">No se pudo cargar el clima.<br>${err.message}</div>
+      `;
+    });
+</script>
+
+</body>
+</html>
